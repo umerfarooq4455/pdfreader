@@ -72,17 +72,19 @@ const SignIn = () => {
     }
   };
 
-  // Facebook login response handler
+  // Handle Facebook Login response
   const handleFacebookResponse = async (response: any) => {
-    try {
-      const fbResponse = await axios.post('/api/auth/facebook', {
-        accessToken: response.accessToken,
-        userID: response.userID,
-      });
-      console.log('Facebook login successful', fbResponse);
-      // Redirect or handle login success
-    } catch (error) {
-      console.error('Facebook login error', error);
+    if (response.accessToken) {
+      try {
+        const fbResponse = await axios.post('/api/auth/facebook', {
+          accessToken: response.accessToken,
+          userID: response.userID,
+        });
+        console.log('Facebook login successful', fbResponse);
+        // Handle successful Facebook login, like redirecting or storing token
+      } catch (error) {
+        console.error('Facebook login error', error);
+      }
     }
   };
 
@@ -178,7 +180,7 @@ const SignIn = () => {
                 onError={() => console.log('Google login failed')}
               />
               <FacebookLogin
-                appId="YOUR_FACEBOOK_APP_ID"
+                appId="45875625885064"
                 fields="name,email,picture"
                 callback={handleFacebookResponse}
                 cssClass="w-full mt-5 flex items-center font-bold gap-2 justify-center shadow-md p-[12px] bg-white hover:bg-[#f9fcff] rounded-[123px]"
